@@ -1,26 +1,14 @@
-import TerrainOutlinedIcon from '@mui/icons-material/TerrainOutlined';
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import LegendToggleOutlinedIcon from '@mui/icons-material/LegendToggleOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import packingListIcon from '@mui/icons-material/InventoryOutlined';
-//import 'react-pro-sidebar/dist/scss/styles.scss'
 import SidebarItem from '../SidebarItem/SidebarItem';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
-import { ColorModeContext, tokens } from '../../theme';
-import { useContext, useState } from 'react';
+import { tokens } from '../../theme';
+import { useState } from 'react';
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-
-
+import TerrainOutlinedIcon from '@mui/icons-material/TerrainOutlined';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 const SidebarList = () => {
     const theme = useTheme();
@@ -89,7 +77,7 @@ const SidebarList = () => {
                 >
                   Sky Roh
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
+                <Typography variant="h5" paddingTop="0.25rem" color={colors.greenAccent[500]}>
                   Climber
                 </Typography>
               </Box>
@@ -108,14 +96,14 @@ const SidebarList = () => {
 
             <SidebarItem
               title="Tracking"
-              to="/tracking"
-              icon={<PeopleOutlinedIcon />}
+              to="/climbingtracker"
+              icon={<BarChartOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <SidebarItem
               title="Packing List"
-              to="/packinglist"
+              to="/login"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
