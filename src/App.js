@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import ClimbingTracker from "./pages/ClimbingTracker/ClimbingTracker";
 import GoalSetting from "./pages/GoalSetting/GoalSetting";
 import SessionItem from "./components/SessionItem/SessionItem";
+import PackingList from "./pages/PackingList/PackingList";
 
 function App() {
   // destructor theme and colorMode from useMode
@@ -27,7 +28,7 @@ function App() {
                 element={<ClimbingTracker />}
               ></Route>
               <Route path="/goalsetting" element={<GoalSetting />}></Route>
-              <Route path="/login" element={<SessionItem />}></Route>
+              <Route path="/packinglist" element={<PackingList />}></Route>
             </Routes>
           </main>
         </div>

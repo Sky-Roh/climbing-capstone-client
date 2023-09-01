@@ -1,42 +1,45 @@
-import SidebarItem from '../SidebarItem/SidebarItem';
-import { Box, IconButton, Typography, useTheme } from '@mui/material';
-import { tokens } from '../../theme';
-import { useState } from 'react';
-import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import SidebarItem from "../SidebarItem/SidebarItem";
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+import { useState } from "react";
+import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import TerrainOutlinedIcon from '@mui/icons-material/TerrainOutlined';
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import TerrainOutlinedIcon from "@mui/icons-material/TerrainOutlined";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 const SidebarList = () => {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
-    const [isCollapsed, setIsCollapsed] = useState();
-    const [selected, setSelected] = useState();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const [isCollapsed, setIsCollapsed] = useState();
+  const [selected, setSelected] = useState();
 
-    return (
-        <Box display="flex"
-        sx={{
-            
-            '.ps-sidebar-container' : {
-              backgroundColor: `${colors.primary[400]} !important`
-            },
-            ".ps-menu-button" : {
-                padding: '5px 25px 5px 20px'
-            },
-            ".ps-menu-button:hover, .ps-menu-label:hover, .css-h6q3q3-MuiTypography-root:hover" : {
-                color: '#868dfb !important'
-            },
-            ".ps-menu-button:active" : {
-                color: '#6870fa !important'
-            },
-            ".ps-sidebar-root" : {
-              border: 'none'
-            }
-        }}>
-        <Sidebar collapsed={isCollapsed}  >
+  return (
+    <Box
+      display="flex"
+      sx={{
+        ".ps-sidebar-container": {
+          backgroundColor: `${colors.primary[400]} !important`,
+        },
+        ".ps-menu-button": {
+          padding: "5px 25px 5px 20px",
+        },
+        ".ps-menu-button:hover, .ps-menu-label:hover, .css-h6q3q3-MuiTypography-root:hover":
+          {
+            color: "#868dfb !important",
+          },
+        ".ps-menu-button:active": {
+          color: "#6870fa !important",
+        },
+        ".ps-sidebar-root": {
+          border: "none",
+        },
+      }}
+    >
+      <Sidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -64,10 +67,22 @@ const SidebarList = () => {
           </MenuItem>
 
           {!isCollapsed && (
-            <Box mb="25px" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-              <Box display="flex" justifyContent="center" alignItems="center" borderRadius="50%" width="6rem"
-                  height="6rem" backgroundColor={`${colors.grey[200]} !important`}>
-              </Box>
+            <Box
+              mb="25px"
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                borderRadius="50%"
+                width="6rem"
+                height="6rem"
+                backgroundColor={`${colors.grey[200]} !important`}
+              ></Box>
               <Box textAlign="center">
                 <Typography
                   variant="h2"
@@ -77,7 +92,11 @@ const SidebarList = () => {
                 >
                   Sky Roh
                 </Typography>
-                <Typography variant="h5" paddingTop="0.25rem" color={colors.greenAccent[500]}>
+                <Typography
+                  variant="h5"
+                  paddingTop="0.25rem"
+                  color={colors.greenAccent[500]}
+                >
                   Climber
                 </Typography>
               </Box>
@@ -93,7 +112,6 @@ const SidebarList = () => {
               setSelected={setSelected}
             />
 
-
             <SidebarItem
               title="Tracking"
               to="/climbingtracker"
@@ -103,7 +121,7 @@ const SidebarList = () => {
             />
             <SidebarItem
               title="Packing List"
-              to="/login"
+              to="/packinglist"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -114,7 +132,7 @@ const SidebarList = () => {
               icon={<TerrainOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />           
+            />
             <SidebarItem
               title="Goal Setting"
               to="/goalsetting"
@@ -122,20 +140,19 @@ const SidebarList = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Box marginBottom={!isCollapsed ? "5.8rem" : "17rem"}>
-            </Box>
-             <SidebarItem
+            <Box marginBottom={!isCollapsed ? "5.8rem" : "17rem"}></Box>
+            <SidebarItem
               title="Log Out"
               to="/logout"
               icon={<LogoutOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            </Box>
+          </Box>
         </Menu>
       </Sidebar>
     </Box>
-    );
+  );
 };
 
 export default SidebarList;
