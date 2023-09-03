@@ -18,12 +18,14 @@ import {
 import { tokens } from "../../theme";
 import SessionItem from "../../components/SessionItem/SessionItem";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
+import EditModal from "../../components/EditModal/EditModal";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const ClimbingTracker = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [showModal, setShowModal] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [currentEvents, setCurrentEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
@@ -43,22 +45,33 @@ const ClimbingTracker = () => {
     });
   }, []);
 
+  // control closing modal
   const handleClose = () => {
     setShowModal(false);
   };
 
+  const handelEditClose = () => {
+    setShowEdit(false)
+  }
+
   const handleDeleteClose = () => {
     setShowDelete(false);
   };
+
+  // click date - pass the date using State
   const handleDateClick = (e) => {
-    //use model
-    setShowModal(true);
+    setShowModal(true)
     setSelectedDate(e.startStr);
   };
 
+  const handleDeleteClick = () => {
+    setShowDelete(true)
+  }
+
   const handleEventClick = (selected) => {
+    //edit here
     if (selected) {
-      setShowDelete(true);
+      setShowEdit(true)
     }
     setSelectedID(selected.event.id);
     setEventTitle(selected.event.title);
@@ -74,7 +87,7 @@ const ClimbingTracker = () => {
         aria-describedby="modal-modal-description"
       >
         <>
-          <SessionItem selectedDate={selectedDate} eventTitle={eventTitle} />
+          <SessionItem selectedDate={selectedDate} />
         </>
       </Modal>
       {/* Delete Modal */}
@@ -85,11 +98,31 @@ const ClimbingTracker = () => {
         aria-describedby="modal-modal-description"
       >
         <>
-          <DeleteModal selectedID={selectedID} />
+          <DeleteModal selectedID={selectedID} eventTitle={eventTitle} handleCloseDeleteModal={handleDeleteClose}/>
         </>
       </Modal>
 
-      <Box display="flex" justifyContent="space-between">
+      <Modal
+        open={showEdit}
+        onClose={handelEditClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <>
+        <EditModal selectedID={selectedID} selectedDate={selectedDate} showDelete={handleDeleteClick}/>
+        </>
+      </Modal>
+
+      {/* Full Calendar */}
+      <Box display="flex" justifyContent="space-between" 
+            sx={{
+              ".fc-daygrid-day-number": {
+                color: `${colors.primary[100]} !important`,
+              },
+              ".fc-toolbar-title": {
+                color: `${colors.primary[100]} !important`,
+              }
+              }}>
         {/* CALENDAR */}
         <Box flex="1 1 100%" ml="15px">
           <FullCalendar
@@ -124,9 +157,9 @@ const ClimbingTracker = () => {
           p="1rem"
           ml="1rem"
           borderRadius="0.25rem"
-          maxHeight="80vh"
-        >
-          <Typography color="secondary" variant="h3">Climbing Sessioin</Typography>
+          height="auto"
+                  >
+          <Typography color="secondary" variant="h3">Climbing Session</Typography>
           <List>
             {currentEvents.map((event) => (
               <ListItem

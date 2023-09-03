@@ -9,10 +9,14 @@ import {
   Select,
   MenuItem,
   FormControl,
+  IconButton,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useNavigate } from "react-router-dom";
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -30,20 +34,31 @@ const style = {
   p: "2rem",
 };
 
-const SessionItem = ({selectedDate}) => {
+const EditModal = ({ selectedID, showDelete }) => {
+
   const navigate = useNavigate();
   const [typeData, setTypeData] = useState([]);
+  const [sessionData, setSessionData] = useState({});
+  const [responseSuccess, setResponseSuccess] = useState(false);
 
   useEffect(() => {
-    axios.get(SERVER_URL + "/climbingtype").then((res) => {
-      setTypeData(res.data);
-    });
-  }, []);
+    axios
+      .get(SERVER_URL + "/climbingtype")
+      .then((res) => {
+        setTypeData(res.data);
+        return axios.get(`${SERVER_URL}/climbingsession/${selectedID}`);
+      })
+      .then((res) => {
+        setSessionData(res.data);
+        setResponseSuccess(true);
+      });
+  }, [selectedID]);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       typeID: 1,
-      sessionDate: selectedDate,
+      sessionDate: "",
       location: "",
       duration: "",
       grade: "",
@@ -64,9 +79,26 @@ const SessionItem = ({selectedDate}) => {
     onSubmit: handleSessionSubmit,
   });
 
+  function populateForm() {
+    formik.setValues({
+      ...formik.values,
+      typeID: sessionData.type_id,
+      sessionDate: sessionData.session_date.slice(0, 10),
+      location: sessionData.location,
+      duration: sessionData.duration,
+      grade: sessionData.grade,
+      description: sessionData.description,
+    });
+  }
+
+  if (responseSuccess) {
+    populateForm();
+    setResponseSuccess(false);
+  }
+
   function handleSessionSubmit(values) {
     axios
-      .post(SERVER_URL + "/climbingsession", {
+      .put(`${SERVER_URL}/climbingsession/${selectedID}`, {
         type_id: values.typeID,
         session_date: values.sessionDate,
         location: values.location,
@@ -93,7 +125,7 @@ const SessionItem = ({selectedDate}) => {
         alignItems="center"
       >
         <Typography mb="1.5rem" variant="h3" textAlign="center">
-          Record your Climbing Session
+          Climbing Session 
         </Typography>
         <Box display="flex" alignItems="center">
           <Box>
@@ -193,9 +225,18 @@ const SessionItem = ({selectedDate}) => {
                 name="description"
                 sx={{ mt: "1.5rem" }}
               />
-              <Box display="flex" justifyContent="end" mt="20px">
+              <Box
+                display="flex"
+                justifyContent="end"
+                mt="1.5rem"
+                gap="1rem"
+                width="100%"
+              >
+                <IconButton color="neutral" variant="contained" onClick={showDelete}>
+                  <DeleteOutlineOutlinedIcon />
+                </IconButton>
                 <Button type="submit" color="secondary" variant="contained">
-                  Add New Session
+                  <EditOutlinedIcon />
                 </Button>
               </Box>
             </form>
@@ -206,5 +247,4 @@ const SessionItem = ({selectedDate}) => {
   );
 };
 
-export default SessionItem;
-
+export default EditModal;

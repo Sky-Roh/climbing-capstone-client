@@ -10,8 +10,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "26rem",
-  height: "20rem",
+  width: "20%",
+  height: "30%",
   bgcolor: "background.paper",
   border: "1px solid grey",
   borderRadius: "0.5rem",
@@ -19,13 +19,15 @@ const style = {
   p: "2rem",
 };
 
-const DeleteModal = ({ selectedID, eventTitle }) => {
+const DeleteModal = ({ selectedID, eventTitle, handleCloseDeleteModal }) => {
   const handleDelete = () => {
     axios.delete(`${SERVER_URL}/climbingsession/${selectedID}`)
     .then(() => {
         console.log("done")
     })
   };
+
+
   return (
     <Box
       sx={style}
@@ -35,7 +37,10 @@ const DeleteModal = ({ selectedID, eventTitle }) => {
       justifyContent="center"
     >
       <Typography mb="1.5rem" variant="h3" textAlign="center">
-        Are you sure you want to delete this event? {eventTitle}
+        Are you sure you want to delete this event?
+      </Typography>
+      <Typography mb="1.5rem" variant="h3" textAlign="center">
+        {eventTitle}
       </Typography>
       <Box
         display="flex"
@@ -44,7 +49,7 @@ const DeleteModal = ({ selectedID, eventTitle }) => {
         gap="1rem"
         width="100%"
       >
-        <Button color="neutral" variant="contained">
+        <Button color="neutral" variant="contained" onClick={handleCloseDeleteModal}>
           Cancel
         </Button>
         <Button onClick={handleDelete} color="secondary" variant="contained">
