@@ -108,9 +108,7 @@ const EditModal = ({ selectedID, showDelete }) => {
         user_id: 1, // will be changed to dynamic
       })
       .then(() => {
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
+          navigate("/redirect");
       })
       .catch(console.error);
   }

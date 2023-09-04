@@ -6,11 +6,11 @@ import SidebarList from "./components/SidebarList/SidebarList";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ClimbingTracker from "./pages/ClimbingTracker/ClimbingTracker";
 import GoalSetting from "./pages/GoalSetting/GoalSetting";
-import SessionItem from "./components/SessionItem/SessionItem";
 import PackingList from "./pages/PackingList/PackingList";
+import Outdoor from "./pages/Outdoor/Outdoor";
+import Redirect from "./pages/Redirect/Redirect";
 
 function App() {
-  // destructor theme and colorMode from useMode
   const [theme, colorMode] = useMode();
 
   return (
@@ -29,6 +29,8 @@ function App() {
               ></Route>
               <Route path="/goalsetting" element={<GoalSetting />}></Route>
               <Route path="/packinglist" element={<PackingList />}></Route>
+              <Route path="/outdoor" element={<Outdoor />}></Route>
+              <Route path="/redirect" element={<Redirect />}></Route>
             </Routes>
           </main>
         </div>

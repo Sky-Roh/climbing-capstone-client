@@ -1,151 +1,139 @@
-import { Box, Button, TextField } from "@mui/material";
-import { Formik } from "formik";
-import * as yup from "yup";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import Chart from "chart.js/auto";
+import { Box, Typography, useTheme, CircularProgress } from "@mui/material";
+import { tokens } from "../../theme";
+import GoalItem from "../../components/GoalItem/GoalItem";
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const GoalSetting = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
-  };
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [goalInfo, setGoalInfo] = useState([]);
+  const chartRef = useRef(null);
+  const chartInstance = useRef(null);
+
+  useEffect(() => {
+    axios.get(`${SERVER_URL}/goals`).then((res) => {
+      const goals = res.data;
+      setGoalInfo(goals);
+      console.log(goals);
+      const completedGoals = goals.filter(
+        (goal) => goal.achievement === "Completed"
+      ).length;
+      const inProgressGoals = goals.filter(
+        (goal) => goal.achievement === "In Progress"
+      ).length;
+      const waitingGoals = goals.filter(
+        (goal) => goal.achievement === "Waiting"
+      ).length;
+
+      //sort by progress and label them
+      const chartData = {
+        labels: ["Completed", "In Progress", "Waiting"],
+        // datasets with backgroundColor
+        datasets: [
+          {
+            data: [completedGoals, inProgressGoals, waitingGoals],
+            backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
+          },
+        ],
+      };
+
+      setData(chartData);
+      setLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (chartRef.current && data.labels.length > 0) {
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+      }
+
+      const ctx = chartRef.current.getContext("2d");
+      chartInstance.current = new Chart(ctx, {
+        type: "pie",
+        data: data,
+      });
+    }
+  }, [data]);
 
   return (
-    <Box m="20px">
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={checkoutSchema}
+    <Box
+      display="flex"
+      margin="0 1.5rem"
+      maxHeight="80%"
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          width: "60%",
+          flexDirection: "column",
+          alignItems: "center",
+          margin: "0",
+          maxHeight: "70%",
+        }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="First Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Last Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
-              />
-            </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Create New User
-              </Button>
-            </Box>
-          </form>
+        <Typography
+          variant="h2"
+          fontWeight="600"
+          margin="1rem 0"
+          color={colors.primary[100]}
+        >
+          Climbing Goals by Progress
+        </Typography>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <canvas
+            id="canvas"
+            ref={chartRef}
+            style={{ maxWidth: "43rem", maxHeight: "43rem" }}
+          />
         )}
-      </Formik>
+      </Box>
+      <Box
+        margin="4rem 1.5rem 0 1.5rem"
+        backgroundColor={colors.blueAccent[100]}
+        width="28%"
+        height="80vh"
+        borderRadius="0.5rem"
+        overflow="auto"
+      >
+        <Typography
+          margin="1rem 0"
+          textAlign="center"
+          variant="h5"
+          fontWeight="600"
+          color={colors.primary[400]}
+        >
+          Goals
+        </Typography>
+
+        {goalInfo.map((goal) => {
+          return (
+            <GoalItem
+              color={colors.primary[400]}
+              key={goal.goal_id}
+              id={goal.goal_id}
+              goal={goal.goal}
+              achievement={goal.achievement}
+              check={goal.check}
+              description={goal.description}
+            />
+          );
+        })}
+      </Box>
     </Box>
   );
-};
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
 };
 
 export default GoalSetting;

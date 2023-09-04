@@ -2,9 +2,8 @@ import { Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -19,13 +18,7 @@ const style = {
   p: "2rem",
 };
 
-const DeleteModal = ({ selectedID, eventTitle, handleCloseDeleteModal }) => {
-  const handleDelete = () => {
-    axios.delete(`${SERVER_URL}/climbingsession/${selectedID}`)
-    .then(() => {
-        console.log("done")
-    })
-  };
+const DeleteModal = ({ selectedID, eventTitle, handleCloseDeleteModal, handleDelete }) => {
 
 
   return (
@@ -49,7 +42,11 @@ const DeleteModal = ({ selectedID, eventTitle, handleCloseDeleteModal }) => {
         gap="1rem"
         width="100%"
       >
-        <Button color="neutral" variant="contained" onClick={handleCloseDeleteModal}>
+        <Button
+          color="neutral"
+          variant="contained"
+          onClick={handleCloseDeleteModal}
+        >
           Cancel
         </Button>
         <Button onClick={handleDelete} color="secondary" variant="contained">

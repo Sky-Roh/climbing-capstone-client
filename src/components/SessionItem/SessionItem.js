@@ -31,8 +31,9 @@ const style = {
 };
 
 const SessionItem = ({selectedDate}) => {
-  const navigate = useNavigate();
   const [typeData, setTypeData] = useState([]);
+  const [redirect, setRedirect] = useState(false)
+  const naviagte = useNavigate();
 
   useEffect(() => {
     axios.get(SERVER_URL + "/climbingtype").then((res) => {
@@ -64,6 +65,7 @@ const SessionItem = ({selectedDate}) => {
     onSubmit: handleSessionSubmit,
   });
 
+
   function handleSessionSubmit(values) {
     axios
       .post(SERVER_URL + "/climbingsession", {
@@ -73,14 +75,16 @@ const SessionItem = ({selectedDate}) => {
         duration: values.duration,
         grade: values.grade,
         description: values.description,
-        user_id: 1, // will be changed to dynamic
+        user_id: 1, 
       })
       .then(() => {
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
+        setRedirect(true);
       })
       .catch(console.error);
+  }
+
+  if (redirect) {
+    naviagte("/redirect");
   }
 
   return (

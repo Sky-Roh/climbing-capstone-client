@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
 import { formatDate } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -19,6 +20,7 @@ import { tokens } from "../../theme";
 import SessionItem from "../../components/SessionItem/SessionItem";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import EditModal from "../../components/EditModal/EditModal";
+import { getColorByTitle } from "../../utils/eventFontColor";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const ClimbingTracker = () => {
@@ -31,6 +33,8 @@ const ClimbingTracker = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedID, setSelectedID] = useState(0);
   const [eventTitle, setEventTitle] = useState("");
+  const [redirect, setRedirect] = useState(false);
+  const naviagte = useNavigate();
 
   useEffect(() => {
     axios.get(`${SERVER_URL}/climbingsession`).then((res) => {
@@ -40,10 +44,15 @@ const ClimbingTracker = () => {
         start: new Date(event.session_date).toISOString().slice(0, 10),
         location: event.location,
         description: event.description,
+        color: getColorByTitle(event.type_name.toString()), 
       }));
+      
       setCurrentEvents(transformedEvents);
     });
   }, []);
+
+
+
 
   // control closing modal
   const handleClose = () => {
@@ -51,8 +60,8 @@ const ClimbingTracker = () => {
   };
 
   const handelEditClose = () => {
-    setShowEdit(false)
-  }
+    setShowEdit(false);
+  };
 
   const handleDeleteClose = () => {
     setShowDelete(false);
@@ -60,22 +69,33 @@ const ClimbingTracker = () => {
 
   // click date - pass the date using State
   const handleDateClick = (e) => {
-    setShowModal(true)
+    setShowModal(true);
     setSelectedDate(e.startStr);
   };
 
   const handleDeleteClick = () => {
-    setShowDelete(true)
-  }
+    setShowDelete(true);
+  };
 
   const handleEventClick = (selected) => {
     //edit here
     if (selected) {
-      setShowEdit(true)
+      setShowEdit(true);
     }
     setSelectedID(selected.event.id);
     setEventTitle(selected.event.title);
   };
+  const handleDelete = () => {
+    axios.delete(`${SERVER_URL}/climbingsession/${selectedID}`).then(() => {
+      setRedirect(true);
+      setShowEdit(false);
+      setShowDelete(false);
+    });
+  };
+
+  if (redirect) {
+    naviagte("/redirect");
+  }
 
   return (
     <Box m="20px">
@@ -87,7 +107,9 @@ const ClimbingTracker = () => {
         aria-describedby="modal-modal-description"
       >
         <>
-          <SessionItem selectedDate={selectedDate} />
+          <SessionItem
+            selectedDate={selectedDate}
+          />
         </>
       </Modal>
       {/* Delete Modal */}
@@ -98,10 +120,15 @@ const ClimbingTracker = () => {
         aria-describedby="modal-modal-description"
       >
         <>
-          <DeleteModal selectedID={selectedID} eventTitle={eventTitle} handleCloseDeleteModal={handleDeleteClose}/>
+          <DeleteModal
+            selectedID={selectedID}
+            eventTitle={eventTitle}
+            handleCloseDeleteModal={handleDeleteClose}
+            handleDelete={handleDelete}
+          />
         </>
       </Modal>
-
+      {/* Edit */}
       <Modal
         open={showEdit}
         onClose={handelEditClose}
@@ -109,20 +136,27 @@ const ClimbingTracker = () => {
         aria-describedby="modal-modal-description"
       >
         <>
-        <EditModal selectedID={selectedID} selectedDate={selectedDate} showDelete={handleDeleteClick}/>
+          <EditModal
+            selectedID={selectedID}
+            selectedDate={selectedDate}
+            showDelete={handleDeleteClick}
+          />
         </>
       </Modal>
 
       {/* Full Calendar */}
-      <Box display="flex" justifyContent="space-between" 
-            sx={{
-              ".fc-daygrid-day-number": {
-                color: `${colors.primary[100]} !important`,
-              },
-              ".fc-toolbar-title": {
-                color: `${colors.primary[100]} !important`,
-              }
-              }}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        sx={{
+          ".fc-daygrid-day-number": {
+            color: `${colors.primary[100]} !important`,
+          },
+          ".fc-toolbar-title": {
+            color: `${colors.primary[100]} !important`,
+          },
+        }}
+      >
         {/* CALENDAR */}
         <Box flex="1 1 100%" ml="15px">
           <FullCalendar
@@ -146,6 +180,7 @@ const ClimbingTracker = () => {
             select={(e) => handleDateClick(e)}
             eventClick={(e) => handleEventClick(e)}
             events={currentEvents}
+
           />
         </Box>
 
@@ -158,8 +193,12 @@ const ClimbingTracker = () => {
           ml="1rem"
           borderRadius="0.25rem"
           height="auto"
-                  >
-          <Typography color="secondary" variant="h3">Climbing Session</Typography>
+          overflow="auto"
+          maxHeight="75vh"
+        >
+          <Typography color="secondary" variant="h3">
+            Climbing Session
+          </Typography>
           <List>
             {currentEvents.map((event) => (
               <ListItem
@@ -168,7 +207,6 @@ const ClimbingTracker = () => {
                   backgroundColor: colors.greenAccent[500],
                   margin: "10px 0",
                   borderRadius: "2px",
-
                 }}
               >
                 <ListItemText

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import OutlinedFlagIcon from "@mui/icons-material/OutlinedFlag";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import TerrainOutlinedIcon from "@mui/icons-material/TerrainOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -136,7 +136,7 @@ const SidebarList = () => {
             <SidebarItem
               title="Goal Setting"
               to="/goalsetting"
-              icon={<CalendarTodayOutlinedIcon />}
+              icon={<OutlinedFlagIcon />}
               selected={selected}
               setSelected={setSelected}
             />
