@@ -1,7 +1,11 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box, Typography, Modal } from "@mui/material";
+import { useState } from "react";
+import EditGoal from "../EditGoal/EditGoal";
 
-const GoalItem = ({ id, goal, achievement, check, description, color }) => {
+const GoalItem = ({ id, goal, achievement, check, description, color, goalInfo }) => {
+  const [editGoalModal, setEditGoalModal] = useState(false);
+  const [goalID, setGoalID] = useState(0)
+
   let fontColor;
 
   if (achievement === "Completed") {
@@ -12,28 +16,50 @@ const GoalItem = ({ id, goal, achievement, check, description, color }) => {
     fontColor = "#FFCE56";
   }
 
+  const handleSelectGoal = (e) => {
+    setEditGoalModal(true);
+    setGoalID(e);
+  };
+  const handleClose = () => {
+    setEditGoalModal(false)
+  }
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        color: color,
-      }}
-    >
-      <Typography margin="1rem" variant="body1" fontWeight="500">
-        - {goal}
-      </Typography>
-      <Typography
-        margin="1rem"
-        variant="body1"
-        fontWeight="500"
-        sx={{
-          color: fontColor,
-        }}
+    <>
+      <Modal
+        open={editGoalModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        {achievement}
-      </Typography>
-    </Box>
+        <>
+          <EditGoal goalID={goalID} goalInfo={goalInfo}/>
+        </>
+      </Modal>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          color: color,
+          borderBottom: "1px solid grey"
+        }}
+        onClick={() => handleSelectGoal(id)}
+      >
+        <Typography margin="1rem" variant="body1" fontWeight="500">
+          {goal}
+        </Typography>
+        <Typography
+          margin="1rem"
+          variant="body1"
+          fontWeight="500"
+          sx={{
+            color: fontColor,
+          }}
+        >
+          {achievement}
+        </Typography>
+      </Box>
+    </>
   );
 };
 

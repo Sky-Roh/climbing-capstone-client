@@ -7,7 +7,7 @@ import {
   useTheme,
   CircularProgress,
   IconButton,
-  Modal
+  Modal,
 } from "@mui/material";
 import { tokens } from "../../theme";
 import GoalItem from "../../components/GoalItem/GoalItem";
@@ -22,7 +22,7 @@ const GoalSetting = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [goalInfo, setGoalInfo] = useState([]);
-  const [showAdd, setShowAdd] = useState(false)
+  const [showAdd, setShowAdd] = useState(false);
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
@@ -30,7 +30,6 @@ const GoalSetting = () => {
     axios.get(`${SERVER_URL}/goals`).then((res) => {
       const goals = res.data;
       setGoalInfo(goals);
-      console.log(goals);
       const completedGoals = goals.filter(
         (goal) => goal.achievement === "Completed"
       ).length;
@@ -73,12 +72,12 @@ const GoalSetting = () => {
   }, [data]);
 
   const handleAddGoal = () => {
-    setShowAdd(true)
+    setShowAdd(true);
   };
 
   const handleAddClose = () => {
-    setShowAdd(false)
-  }
+    setShowAdd(false);
+  };
 
   return (
     <>
@@ -90,7 +89,6 @@ const GoalSetting = () => {
       >
         <>
           <AddGoal />
-          
         </>
       </Modal>
       <Box
@@ -150,11 +148,8 @@ const GoalSetting = () => {
             >
               Goals
             </Typography>
-            <IconButton
-              sx={{ color: colors.primary[400] }}
-              onClick={handleAddGoal}
-            >
-              <AddTaskOutlinedIcon />
+            <IconButton onClick={handleAddGoal}>
+              <AddTaskOutlinedIcon sx={{ color: colors.blueAccent[500] }} />
             </IconButton>
           </Box>
 
@@ -162,6 +157,7 @@ const GoalSetting = () => {
             return (
               <GoalItem
                 color={colors.primary[400]}
+                goalInfo={goalInfo}
                 key={goal.goal_id}
                 id={goal.goal_id}
                 goal={goal.goal}

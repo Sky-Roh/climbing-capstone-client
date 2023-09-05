@@ -85,6 +85,9 @@ const PackingList = () => {
     setDeleteConfirmationOpen(false);
     setDeleteItemId(null);
   };
+   const handleEditText = (value) => {
+    setEditItemText(value)
+   }
 
   const handleDeleteItem = async () => {
     try {
@@ -241,6 +244,7 @@ const PackingList = () => {
               id={item.packing_id}
               packing_item={item.packing_item}
               check={item.check}
+              redColor={colors.redAccent[600]}
               colour={colors.primary[100]}
               editItemId={editItemId}
               editItemText={editItemText}
@@ -248,6 +252,7 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
         {selectedClimbingType === typeData[0] &&
@@ -264,6 +269,7 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
         {selectedClimbingType === typeData[1] &&
@@ -283,6 +289,7 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
         {selectedClimbingType === typeData[2] &&
@@ -299,6 +306,7 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
         {selectedClimbingType === typeData[3] &&
@@ -315,6 +323,7 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
         {selectedClimbingType === typeData[4] &&
@@ -331,20 +340,21 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
       </List>
 
       <Dialog open={deleteConfirmationOpen} onClose={handleDeleteCancel}>
-        <DialogTitle>Delete Item</DialogTitle>
+        <DialogTitle style={{ color: colors.redAccent[400] }}> Delete Item</DialogTitle>
         <DialogContent>
           Are you sure you want to delete this item?
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteCancel} color="primary">
+          <Button style={{ color: colors.primary[100] }}onClick={handleDeleteCancel}  >
             Cancel
           </Button>
-          <Button onClick={handleDeleteItem} color="primary">
+          <Button style={{ color: colors.redAccent[500] }} onClick={handleDeleteItem} >
             Delete
           </Button>
         </DialogActions>
