@@ -28,12 +28,12 @@ const Dashboard = () => {
           padding="1.5rem"
           backgroundColor={colors.grey[200]}
           borderRadius="0.5rem"
-          maxHeight="60vh"
+          maxHeight="70vh"
         >
           <img
             src={mountNemo}
             alt="Mount Nemo pic"
-            style={{ width: "40vh", height: "50vh" }}
+            style={{ width: "40vw", height: "60vh" }}
           />
           <Typography
             mr="1rem"
@@ -43,7 +43,7 @@ const Dashboard = () => {
             Mount Nemo photo by Sky
           </Typography>
         </Box>
-        <Box m="2rem 2rem" maxHeight="68vh" overflow="auto">
+        <Box m="0 0 0 2rem" maxHeight="70vh" overflow="auto">
           <Typography variant="h3" mb="1.5rem">
             ClimbStation is your ultimate climbing companion, designed for both
             indoor and outdoor enthusiasts. Whether you're scaling artificial

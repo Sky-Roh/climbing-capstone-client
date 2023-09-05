@@ -155,14 +155,14 @@ const PackingList = () => {
     setAddItem(false);
   }
 
-  const handleAdd = (e) => {
+  const handleAdd = () => {
     setAddItem(true);
   }
 
   return (
     <Box
       display="flex"
-      sx={{ flexDirection: "column", alignItems: "center", margin: 0 }}
+      sx={{ flexDirection: "column", alignItems: "center", margin: 0, maxHeight: "80vh" }}
     >
       <Modal
         open={addItem}
@@ -194,6 +194,8 @@ const PackingList = () => {
           borderRadius: "0.5rem",
           width: "100%",
           maxWidth: "50%",
+          maxHeight: "100vh",
+          overflow: "auto",
           bgcolor: `${colors.primary[400]}`,
         }}
       >
@@ -226,7 +228,7 @@ const PackingList = () => {
               ))}
             </Select>
           </FormControl>
-          <IconButton onClick={(e) => handleAdd(e)} sx={{ width: "2.5rem", height: "2.5rem" }} >
+          <IconButton onClick={handleAdd} sx={{ width: "2.5rem", height: "2.5rem" }} >
             <AddCircleOutlineOutlinedIcon />
           </IconButton>
         </Box>
