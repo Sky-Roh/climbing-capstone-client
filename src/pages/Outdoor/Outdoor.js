@@ -32,25 +32,25 @@ const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 function getWeatherIcon(weather) {
     switch (weather) {
       case "Clear":
-        return <img src={clearIcon} alt="Clear" />;
+        return <img src={clearIcon} alt="Clear" style={{ width: "6rem", height: "6rem" }}/>;
       case "Clouds":
-        return <img src={cloudIcon} alt="Clouds" />;
+        return <img src={cloudIcon} alt="Clouds" style={{ width: "6rem", height: "6rem" }}/>;
       case "Rain":
-        return <img src={rainIcon} alt="Rain" />;
+        return <img src={rainIcon} alt="Rain" style={{ width: "6rem", height: "6rem" }}/>;
       case "Mist":
-        return <img src={mistIcon} alt="Mist" />;
+        return <img src={mistIcon} alt="Mist" style={{ width: "6rem", height: "6rem" }}/>;
       case "Thunderstorm":
-        return <img src={thunderstormIcon} alt="Thunderstorm" />;
+        return <img src={thunderstormIcon} alt="Thunderstorm" style={{ width: "6rem", height: "6rem" }}/>;
       case "Drizzle":
-        return <img src={drizzleIcon} alt="Drizzle" />;
+        return <img src={drizzleIcon} alt="Drizzle" style={{ width: "6rem", height: "6rem" }}/>;
       case "Fog":
-        return <img src={fogIcon} alt="Fog" />;
+        return <img src={fogIcon} alt="Fog" style={{ width: "6rem", height: "6rem" }}/>;
       case "Snow":
-        return <img src={snowIcon} alt="Snow" />;
+        return <img src={snowIcon} alt="Snow" style={{ width: "6rem", height: "6rem" }}/>;
       case "Haze":
-        return <img src={hazeIcon} alt="Haze" />;
+        return <img src={hazeIcon} alt="Haze" style={{ width: "6rem", height: "6rem" }}/>;
       default:
-        return <img src={unknownIcon} alt="Unknown" />;
+        return <img src={unknownIcon} alt="Unknown" style={{ width: "6rem", height: "6rem" }} />;
     }
   }
 
@@ -73,9 +73,9 @@ const Outdoor = () => {
     <>
       <Box textAlign="center" color={colors.grey[100]}>
         <Typography variant="h2" fontWeight="600" m="1rem 0">
-          <WbSunnyOutlinedIcon style={{ fontSize: "1.6rem" }} /> Weather
+          <WbSunnyOutlinedIcon style={{ fontSize: "1.4rem" }} /> Weather
         </Typography>
-        <Typography variant="h4" fontWeight="500" mb="1.2rem">
+        <Typography variant="h4" fontWeight="500" mb="1rem">
           For Outdoor Climbing in ONTARIO
         </Typography>
       </Box>
@@ -84,12 +84,11 @@ const Outdoor = () => {
         display="flex"
         flexDirection="column"
         width="50%"
-        height="74%"
-
+        height="70vh"
         sx={{
           alignItems: "center",
           margin: "0 auto",
-          padding: "2rem 0",
+          padding: "1rem 0",
           backgroundColor: `${colors.greenAccent[600]}`,
           color: `${colors.grey[100]}`,
           borderRadius: "3rem",
@@ -100,7 +99,7 @@ const Outdoor = () => {
             value={city}
             onChange={(e) => setCity(e.target.value)}
             fullWidth
-            style={{ fontSize: "1.5rem", textAlign: "center" }}
+            style={{ fontSize: "1.6rem", textAlign: "center" }}
           >
             <MenuItem value="Milton">Rattlesnake Point</MenuItem>
             <MenuItem value="The Blue Mountains">Metcalfe Rock</MenuItem>
@@ -113,16 +112,11 @@ const Outdoor = () => {
           <CircularProgress />
         ) : weatherData ? (
           <>
-            <Typography mt="2rem" variant="h1" fontWeight="600">
+            <Typography mt="2rem" variant="h2" fontWeight="600">
               {weatherData.name}
             </Typography>
-            <Box>
-
+            <Box mt="2rem">
               {getWeatherIcon(weatherData.weather[0].main)}
-
-              <Typography mt="0.1rem" variant="h3" fontWeight="700" textAlign="center">
-                {weatherData.weather[0].main}
-              </Typography>
             </Box>
             <Typography variant="h2" mt="2rem" fontWeight="600">
               {Math.round(weatherData.main.temp - 273.15)}°C
@@ -130,7 +124,7 @@ const Outdoor = () => {
             <Box
               display="flex"
               sx={{
-                mt: "2rem",
+                mt: "2.5rem",
                 justifyContent: "space-between",
                 width: "100%",
                 padding: "0 10rem",
