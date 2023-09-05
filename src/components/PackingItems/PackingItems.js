@@ -1,54 +1,56 @@
-import DeleteIcon from "@mui/icons-material/Delete";
+// PackingItem.js
+import React, { useState } from "react";
 import {
   ListItem,
-  ListItemText,
   ListItemIcon,
   Checkbox,
   IconButton,
   ListItemSecondaryAction,
   TextField,
-  useTheme,
+  ListItemText,
 } from "@mui/material";
-import React, { useState } from "react";
-import { tokens } from "../../theme";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-
-
-const PackingItems = ({
-  item
+const PackingItem = ({
+  id,
+  packing_item,
+  check,
+  colour,
+  editItemId,
+  editItemText,
+  onToggleCheck,
+  onEditItem,
+  onDeleteConfirmation,
+  onSaveItem,
 }) => {
-    const [editItemText, setEditItemText] = useState("");
-
-
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
+  const isEditing = editItemId === id;
 
   return (
-    <ListItem key={item.packing_id}>
+    <ListItem key={id} sx={{ color: colour }}>
       <ListItemIcon>
         <Checkbox
           edge="start"
-          checked={item.check == true}
+          checked={check}
           tabIndex={-1}
           disableRipple
-          onClick={() => handleToggleCheck(item.packing_id)}
+          onClick={() => onToggleCheck(id)}
+          color="secondary"
         />
       </ListItemIcon>
-      {editItemId === item.packing_id ? (
+      {isEditing ? (
         <TextField
           fullWidth
           value={editItemText}
-          onChange={(e) => setEditItemText(e.target.value)}
-          onBlur={() => handleSaveItem(item.packing_id)}
+          onChange={(e) => onEditItem(e.target.value)}
+          onBlur={() => onSaveItem(id)}
           autoFocus
         />
       ) : (
         <ListItemText
-          primary={item.packing_item}
+          primary={packing_item}
           primaryTypographyProps={{
-            style: { color: colors.primary[100], cursor: "pointer" },
-            onClick: () => handleEditItem(item.packing_id), // Clicking on text starts editing
+            style: { cursor: "pointer" },
+            onClick: () => onEditItem(id),
           }}
         />
       )}
@@ -56,7 +58,7 @@ const PackingItems = ({
         <IconButton
           edge="end"
           aria-label="delete"
-          onClick={() => handleDeleteConfirmation(item.packing_id)}
+          onClick={() => onDeleteConfirmation(id)}
         >
           <DeleteIcon />
         </IconButton>
@@ -65,4 +67,4 @@ const PackingItems = ({
   );
 };
 
-export default PackingItems;
+export default PackingItem;

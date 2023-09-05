@@ -9,7 +9,7 @@ import GoalSetting from "./pages/GoalSetting/GoalSetting";
 import PackingList from "./pages/PackingList/PackingList";
 import Outdoor from "./pages/Outdoor/Outdoor";
 import Redirect from "./pages/Redirect/Redirect";
-
+import RedirectSession from "./pages/RedirectSession/RedirectSession"
 function App() {
   const [theme, colorMode] = useMode();
 
@@ -31,6 +31,8 @@ function App() {
               <Route path="/packinglist" element={<PackingList />}></Route>
               <Route path="/outdoor" element={<Outdoor />}></Route>
               <Route path="/redirect" element={<Redirect />}></Route>
+              <Route path="/redirectSession" element={<RedirectSession />}></Route>
+
             </Routes>
           </main>
         </div>

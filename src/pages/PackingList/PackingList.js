@@ -2,13 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Checkbox,
-  IconButton,
-  ListItemSecondaryAction,
-  TextField,
   useTheme,
   Typography,
   Dialog,
@@ -16,29 +9,63 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  IconButton,
+  Modal,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import PackingItems from "../../components/PackingItems/PackingItems";
 import { tokens } from "../../theme";
 import axios from "axios";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import AddPackingList from "../../components/AddPackingList/AddPackingList";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const PackingList = () => {
   const [items, setItems] = useState([]);
-  const [checkItem, setCheckItem] = useState(false);
   const [editItemId, setEditItemId] = useState(null);
   const [editItemText, setEditItemText] = useState("");
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState(null);
-
+  const [addItem, setAddItem] = useState(false);
+  const [selectedClimbingType, setSelectedClimbingType] = useState("");
+  const [indoorBouldering, setIndoorBouldering] = useState([]);
+  const [outdoorBouldering, setOutdoorBouldering] = useState([]);
+  const [indoorSportClimbing, setIndoorSportClimbing] = useState([]);
+  const [indoorTopRope, setIndoorTopRope] = useState([]);
+  const [outdoorSportClimbing, setOutdoorSportClimbing] = useState([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const typeData = [
+    "Indoor Bouldering",
+    "Outdoor Bouldering",
+    "Indoor Sport Climbing",
+    "Indoor Top Rope",
+    "Outdoor Sport Climbing",
+  ];
 
   useEffect(() => {
     axios.get(`${SERVER_URL}/packinglist`).then((res) => {
       const sortedItems = res.data.sort((a, b) => a.packing_id - b.packing_id);
-      console.log("get", sortedItems);
-      setCheckItem(sortedItems.map((item) => item.check));
       setItems(sortedItems);
+      setIndoorBouldering(
+        sortedItems.filter((item) => item.climbingtype_name === typeData[0])
+      );
+      setOutdoorBouldering(
+        sortedItems.filter((item) => item.climbingtype_name === typeData[1])
+      );
+      setIndoorSportClimbing(
+        sortedItems.filter((item) => item.climbingtype_name === typeData[2])
+      );
+      setIndoorTopRope(
+        sortedItems.filter((item) => item.climbingtype_name === typeData[3])
+      );
+      setOutdoorSportClimbing(
+        sortedItems.filter((item) => item.climbingtype_name === typeData[4])
+      );
     });
   }, [editItemId]);
 
@@ -124,13 +151,35 @@ const PackingList = () => {
     setEditItemId(null);
   };
 
+  const handleItemClose = () => {
+    setAddItem(false);
+  }
+
+  const handleAdd = (e) => {
+    setAddItem(true);
+  }
+
   return (
     <Box
       display="flex"
       sx={{ flexDirection: "column", alignItems: "center", margin: 0 }}
     >
+      <Modal
+        open={addItem}
+        onClose={handleItemClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <>
+          <AddPackingList typeData={typeData}/>
+        </>
+      </Modal>
       <Box m="1.5rem 0">
-        <Typography variant="h2" sx={{ color: colors.primary[100] }}>
+        <Typography
+          variant="h2"
+          fontWeight="500"
+          sx={{ color: colors.primary[100] }}
+        >
           Packing List For Climbing
         </Typography>
       </Box>
@@ -148,47 +197,140 @@ const PackingList = () => {
           bgcolor: `${colors.primary[400]}`,
         }}
       >
-        {items.map((item) => (
-          <>
-            <ListItem key={item.packing_id}>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={item.check == true}
-                  tabIndex={-1}
-                  disableRipple
-                  onClick={() => handleToggleCheck(item.packing_id)}
-                />
-              </ListItemIcon>
-              {editItemId === item.packing_id ? (
-                <TextField
-                  fullWidth
-                  value={editItemText}
-                  onChange={(e) => setEditItemText(e.target.value)}
-                  onBlur={() => handleSaveItem(item.packing_id)}
-                  autoFocus
-                />
-              ) : (
-                <ListItemText
-                  primary={item.packing_item}
-                  primaryTypographyProps={{
-                    style: { color: colors.primary[100], cursor: "pointer" },
-                    onClick: () => handleEditItem(item.packing_id), // Clicking on text starts editing
-                  }}
-                />
-              )}
-              <ListItemSecondaryAction>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => handleDeleteConfirmation(item.packing_id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          </>
-        ))}
+        <Box
+          display="flex"
+          width="100%"
+          sx={{ justifyContent: "flex-end", alignContent: "center" }}
+        >
+          <FormControl
+            variant="filled"
+            sx={{
+              mb: "1.5rem",
+              display: "flex",
+              justifyContent: "center",
+              minWidth: "90%",
+            }}
+          >
+            <InputLabel id="climbingtype">Type of Climbing</InputLabel>
+            <Select
+              label="climbingtype"
+              name="climbingtype"
+              value={selectedClimbingType}
+              onChange={(event) => {
+                setSelectedClimbingType(event.target.value);
+              }}
+            >
+              {typeData.map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <IconButton onClick={(e) => handleAdd(e)} sx={{ width: "2.5rem", height: "2.5rem" }} >
+            <AddCircleOutlineOutlinedIcon />
+          </IconButton>
+        </Box>
+
+        {selectedClimbingType === "" &&
+          items.map((item) => (
+            <PackingItems
+              key={item.packing_id}
+              id={item.packing_id}
+              packing_item={item.packing_item}
+              check={item.check}
+              colour={colors.primary[100]}
+              editItemId={editItemId}
+              editItemText={editItemText}
+              onToggleCheck={handleToggleCheck}
+              onEditItem={handleEditItem}
+              onDeleteConfirmation={handleDeleteConfirmation}
+              onSaveItem={handleSaveItem}
+            />
+          ))}
+        {selectedClimbingType === typeData[0] &&
+          indoorBouldering.map((item) => (
+            <PackingItems
+              key={item.packing_id}
+              id={item.packing_id}
+              packing_item={item.packing_item}
+              check={item.check}
+              colour={colors.primary[100]}
+              editItemId={editItemId}
+              editItemText={editItemText}
+              onToggleCheck={handleToggleCheck}
+              onEditItem={handleEditItem}
+              onDeleteConfirmation={handleDeleteConfirmation}
+              onSaveItem={handleSaveItem}
+            />
+          ))}
+        {selectedClimbingType === typeData[1] &&
+          (selectedClimbingType === "Outdoor Bouldering"
+            ? indoorBouldering
+            : outdoorBouldering
+          ).map((item) => (
+            <PackingItems
+              key={item.packing_id}
+              id={item.packing_id}
+              packing_item={item.packing_item}
+              check={item.check}
+              colour={colors.primary[100]}
+              editItemId={editItemId}
+              editItemText={editItemText}
+              onToggleCheck={handleToggleCheck}
+              onEditItem={handleEditItem}
+              onDeleteConfirmation={handleDeleteConfirmation}
+              onSaveItem={handleSaveItem}
+            />
+          ))}
+        {selectedClimbingType === typeData[2] &&
+          indoorSportClimbing.map((item) => (
+            <PackingItems
+              key={item.packing_id}
+              id={item.packing_id}
+              packing_item={item.packing_item}
+              check={item.check}
+              colour={colors.primary[100]}
+              editItemId={editItemId}
+              editItemText={editItemText}
+              onToggleCheck={handleToggleCheck}
+              onEditItem={handleEditItem}
+              onDeleteConfirmation={handleDeleteConfirmation}
+              onSaveItem={handleSaveItem}
+            />
+          ))}
+        {selectedClimbingType === typeData[3] &&
+          indoorTopRope.map((item) => (
+            <PackingItems
+              key={item.packing_id}
+              id={item.packing_id}
+              packing_item={item.packing_item}
+              check={item.check}
+              colour={colors.primary[100]}
+              editItemId={editItemId}
+              editItemText={editItemText}
+              onToggleCheck={handleToggleCheck}
+              onEditItem={handleEditItem}
+              onDeleteConfirmation={handleDeleteConfirmation}
+              onSaveItem={handleSaveItem}
+            />
+          ))}
+        {selectedClimbingType === typeData[4] &&
+          outdoorSportClimbing.map((item) => (
+            <PackingItems
+              key={item.packing_id}
+              id={item.packing_id}
+              packing_item={item.packing_item}
+              check={item.check}
+              colour={colors.primary[100]}
+              editItemId={editItemId}
+              editItemText={editItemText}
+              onToggleCheck={handleToggleCheck}
+              onEditItem={handleEditItem}
+              onDeleteConfirmation={handleDeleteConfirmation}
+              onSaveItem={handleSaveItem}
+            />
+          ))}
       </List>
 
       <Dialog open={deleteConfirmationOpen} onClose={handleDeleteCancel}>
