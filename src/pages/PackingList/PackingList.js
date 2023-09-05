@@ -203,7 +203,6 @@ const PackingList = () => {
           sx={{ justifyContent: "flex-end", alignContent: "center" }}
         >
           <FormControl
-            variant="filled"
             sx={{
               mb: "1.5rem",
               display: "flex",
