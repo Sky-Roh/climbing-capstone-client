@@ -1,8 +1,8 @@
-import { Box, Typography, Modal } from "@mui/material";
+import { Box, Typography, Modal, colors } from "@mui/material";
 import { useState } from "react";
 import EditGoal from "../EditGoal/EditGoal";
 
-const GoalItem = ({ id, goal, achievement, check, description, color, goalInfo }) => {
+const GoalItem = ({ id, goal, achievement, check, description, color, goalInfo, colors }) => {
   const [editGoalModal, setEditGoalModal] = useState(false);
   const [goalID, setGoalID] = useState(0)
 
@@ -41,7 +41,11 @@ const GoalItem = ({ id, goal, achievement, check, description, color, goalInfo }
           display: "flex",
           justifyContent: "space-between",
           color: color,
-          borderBottom: "1px solid grey"
+          borderBottom: "1px solid grey",     
+          "&:hover": {
+            backgroundColor: colors.blueAccent[200], 
+            cursor: "pointer",
+          },     
         }}
         onClick={() => handleSelectGoal(id)}
       >

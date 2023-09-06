@@ -43,7 +43,7 @@ const AddPackingList = ({ typeData }) => {
       packing_item: "",
       important_level: "",
       check: false,
-      climbingtypeName: "Indoor Bouldering",
+      climbingtype_name: "Indoor Bouldering",
       user_id: 1,
     },
     validationSchema: Yup.object({
@@ -51,7 +51,7 @@ const AddPackingList = ({ typeData }) => {
         .max(30, "Must be 30 characters or less")
         .trim()
         .required("This field is required"),
-      climbingtypeName: Yup.string().trim().required("This field is required"),
+        climbingtype_name: Yup.string().trim().required("This field is required"),
     }),
     onSubmit: handleSessionSubmit,
   });
@@ -62,7 +62,7 @@ const AddPackingList = ({ typeData }) => {
         packing_item: values.packingItem,
         important_level: values.importantLevel,
         check: values.check,
-        climbingtype_name: values.climbingtypeName,
+        climbingtype_name: values.climbingtype_name,
         user_id: 1,
       })
       .then(() => {
@@ -98,15 +98,17 @@ const AddPackingList = ({ typeData }) => {
                 <InputLabel id="climbingtypeID">Type of Climbing</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
-                  {...formik.getFieldProps("typeID")}
+                  {...formik.getFieldProps("climbingtype_name")}
                   helpertext={
-                    formik.touched.climbingtypeName &&
-                    formik.errors.climbingtypeName
+                    formik.touched.climbingtype_name &&
+                    formik.errors.climbingtype_name
                   }
                   label="climbingtype"
                   name="climbingtype"
-                  value={formik.values.climbingtypeName}
-                  onChange={formik.handleChange}
+                  value={formik.values.climbingtype_name}
+                  onChange={(event) => {
+                    formik.setFieldValue("climbingtype_name", event.target.value);
+                  }}
                 >
                   {typeData.map((option) => {
                     return (

@@ -11,6 +11,7 @@ import {
   FormControl,
   IconButton,
   useTheme,
+  Modal
 } from "@mui/material";
 import { tokens } from "../../theme";
 import { useFormik } from "formik";
@@ -18,6 +19,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteGoal from "../DeleteGoal/DeleteGoal";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -35,12 +37,13 @@ const style = {
   p: "2rem",
 };
 
-const EditGoal = ({ goalID, goalInfo, showDelete }) => {
+const EditGoal = ({ goalID, goalInfo }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   const [responseSuccess, setResponseSuccess] = useState(false);
   const [goalData, setGoalData] = useState({});
+  const [showDelete, setShowDelete] = useState(false);
 
   useEffect(() => {
     axios.get(`${SERVER_URL}/goals/${goalID}`).then((res) => {
@@ -60,7 +63,7 @@ const EditGoal = ({ goalID, goalInfo, showDelete }) => {
         user_id: values.user_id,
       })
       .then(() => {
-        navigate("/redirect");
+        navigate("/redirectGoal");
       })
       .catch(console.error);
   };
@@ -101,10 +104,26 @@ const EditGoal = ({ goalID, goalInfo, showDelete }) => {
     setResponseSuccess(false);
   }
 
+  const handleDeleteClose = () => {
+    setShowDelete(false)
+  }
 
+  const handleDeleteModal = () => {
+    setShowDelete(true);
+  }
 
   return (
     <>
+      <Modal
+        open={showDelete}
+        onClose={handleDeleteClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <>
+          <DeleteGoal setShowDelete={setShowDelete} goalID={goalID}/>
+        </>
+      </Modal>
       <Box
         sx={style}
         display="flex"
@@ -136,16 +155,11 @@ const EditGoal = ({ goalID, goalInfo, showDelete }) => {
                   value={formik.values.achievement}
                   onChange={(event) => {
                     formik.setFieldValue("achievement", event.target.value);
-                  }}                >
-                  <MenuItem value="Completed">
-                    Completed
-                  </MenuItem>
-                  <MenuItem value="In Progress">
-                    In Progress
-                  </MenuItem>
-                  <MenuItem value="Waiting">
-                    Waiting
-                  </MenuItem>
+                  }}
+                >
+                  <MenuItem value="Completed">Completed</MenuItem>
+                  <MenuItem value="In Progress">In Progress</MenuItem>
+                  <MenuItem value="Waiting">Waiting</MenuItem>
                 </Select>
               </FormControl>
               {/*  */}
@@ -159,9 +173,7 @@ const EditGoal = ({ goalID, goalInfo, showDelete }) => {
                 value={formik.values.goal}
                 name="goal"
                 error={formik.touched.goal && formik.errors.goal}
-                helperText={
-                  formik.touched.goal && formik.errors.goal
-                }
+                helperText={formik.touched.goal && formik.errors.goal}
               />
               <TextField
                 fullWidth
@@ -184,7 +196,7 @@ const EditGoal = ({ goalID, goalInfo, showDelete }) => {
                 <IconButton
                   color="neutral"
                   variant="contained"
-                  onClick={showDelete}
+                  onClick={handleDeleteModal}
                   style={{ color: colors.redAccent[500] }}
                 >
                   <DeleteOutlineOutlinedIcon />
