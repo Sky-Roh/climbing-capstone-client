@@ -30,29 +30,89 @@ import unknownIcon from "../../assets/icons/unknown.png";
 const API = process.env.REACT_APP_WEATHER_API;
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 function getWeatherIcon(weather) {
-    switch (weather) {
-      case "Clear":
-        return <img src={clearIcon} alt="Clear" style={{ width: "6rem", height: "6rem" }}/>;
-      case "Clouds":
-        return <img src={cloudIcon} alt="Clouds" style={{ width: "6rem", height: "6rem" }}/>;
-      case "Rain":
-        return <img src={rainIcon} alt="Rain" style={{ width: "6rem", height: "6rem" }}/>;
-      case "Mist":
-        return <img src={mistIcon} alt="Mist" style={{ width: "6rem", height: "6rem" }}/>;
-      case "Thunderstorm":
-        return <img src={thunderstormIcon} alt="Thunderstorm" style={{ width: "6rem", height: "6rem" }}/>;
-      case "Drizzle":
-        return <img src={drizzleIcon} alt="Drizzle" style={{ width: "6rem", height: "6rem" }}/>;
-      case "Fog":
-        return <img src={fogIcon} alt="Fog" style={{ width: "6rem", height: "6rem" }}/>;
-      case "Snow":
-        return <img src={snowIcon} alt="Snow" style={{ width: "6rem", height: "6rem" }}/>;
-      case "Haze":
-        return <img src={hazeIcon} alt="Haze" style={{ width: "6rem", height: "6rem" }}/>;
-      default:
-        return <img src={unknownIcon} alt="Unknown" style={{ width: "6rem", height: "6rem" }} />;
-    }
+  switch (weather) {
+    case "Clear":
+      return (
+        <img
+          src={clearIcon}
+          alt="Clear"
+          style={{ width: "6rem", height: "6rem" }}
+        />
+      );
+    case "Clouds":
+      return (
+        <img
+          src={cloudIcon}
+          alt="Clouds"
+          style={{ width: "6rem", height: "6rem" }}
+        />
+      );
+    case "Rain":
+      return (
+        <img
+          src={rainIcon}
+          alt="Rain"
+          style={{ width: "6rem", height: "6rem" }}
+        />
+      );
+    case "Mist":
+      return (
+        <img
+          src={mistIcon}
+          alt="Mist"
+          style={{ width: "6rem", height: "6rem" }}
+        />
+      );
+    case "Thunderstorm":
+      return (
+        <img
+          src={thunderstormIcon}
+          alt="Thunderstorm"
+          style={{ width: "6rem", height: "6rem" }}
+        />
+      );
+    case "Drizzle":
+      return (
+        <img
+          src={drizzleIcon}
+          alt="Drizzle"
+          style={{ width: "6rem", height: "6rem" }}
+        />
+      );
+    case "Fog":
+      return (
+        <img
+          src={fogIcon}
+          alt="Fog"
+          style={{ width: "6rem", height: "6rem" }}
+        />
+      );
+    case "Snow":
+      return (
+        <img
+          src={snowIcon}
+          alt="Snow"
+          style={{ width: "6rem", height: "6rem" }}
+        />
+      );
+    case "Haze":
+      return (
+        <img
+          src={hazeIcon}
+          alt="Haze"
+          style={{ width: "6rem", height: "6rem" }}
+        />
+      );
+    default:
+      return (
+        <img
+          src={unknownIcon}
+          alt="Unknown"
+          style={{ width: "6rem", height: "6rem" }}
+        />
+      );
   }
+}
 
 const Outdoor = () => {
   const [city, setCity] = useState("Milton");
@@ -115,9 +175,7 @@ const Outdoor = () => {
             <Typography mt="2rem" variant="h2" fontWeight="600">
               {weatherData.name}
             </Typography>
-            <Box mt="2rem">
-              {getWeatherIcon(weatherData.weather[0].main)}
-            </Box>
+            <Box mt="2rem">{getWeatherIcon(weatherData.weather[0].main)}</Box>
             <Typography variant="h2" mt="2rem" fontWeight="600">
               {Math.round(weatherData.main.temp - 273.15)}°C
             </Typography>
@@ -162,6 +220,28 @@ const Outdoor = () => {
                 />
                 <Typography variant="h3" mt="2rem">
                   {weatherData.wind.speed} km/h
+                </Typography>
+              </Box>
+            </Box>
+            <Box>
+              <Typography variant="h3" mt="2rem" textAlign="center">
+                Feels like:{" "}
+                <span>
+                  {Math.round(weatherData.main.feels_like - 273.15)}°C
+                </span>
+              </Typography>
+              <Box display="flex" sx={{ gap: "2rem"}}>
+                <Typography variant="h3" mt="2rem">
+                  Min{" "}
+                  <span>
+                    {Math.round(weatherData.main.temp_min - 273.15)}°C
+                  </span>
+                </Typography>
+                <Typography variant="h3" mt="2rem">
+                  Max{" "}
+                  <span>
+                    {Math.round(weatherData.main.temp_max - 273.15)}°C
+                  </span>
                 </Typography>
               </Box>
             </Box>

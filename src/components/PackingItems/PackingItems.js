@@ -15,6 +15,7 @@ const PackingItem = ({
   id,
   packing_item,
   check,
+  redColor,
   colour,
   editItemId,
   editItemText,
@@ -22,6 +23,7 @@ const PackingItem = ({
   onEditItem,
   onDeleteConfirmation,
   onSaveItem,
+  handleEditText,
 }) => {
   const isEditing = editItemId === id;
 
@@ -41,7 +43,7 @@ const PackingItem = ({
         <TextField
           fullWidth
           value={editItemText}
-          onChange={(e) => onEditItem(e.target.value)}
+          onChange={(e) => handleEditText(e.target.value)}
           onBlur={() => onSaveItem(id)}
           autoFocus
         />
@@ -58,6 +60,7 @@ const PackingItem = ({
         <IconButton
           edge="end"
           aria-label="delete"
+          style={{ color: redColor }}
           onClick={() => onDeleteConfirmation(id)}
         >
           <DeleteIcon />

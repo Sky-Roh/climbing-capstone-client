@@ -9,8 +9,9 @@ import {
   Select,
   MenuItem,
   FormControl,
-  IconButton,
+  IconButton,useTheme
 } from "@mui/material";
+import { tokens } from "../../theme";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -35,7 +36,8 @@ const style = {
 };
 
 const EditModal = ({ selectedID, showDelete }) => {
-
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   const [typeData, setTypeData] = useState([]);
   const [sessionData, setSessionData] = useState({});
@@ -230,8 +232,8 @@ const EditModal = ({ selectedID, showDelete }) => {
                 gap="1rem"
                 width="100%"
               >
-                <IconButton color="neutral" variant="contained" onClick={showDelete}>
-                  <DeleteOutlineOutlinedIcon />
+                <IconButton color="neutral" variant="contained" onClick={showDelete} style={{ color: colors.redAccent[500] }} > 
+                  <DeleteOutlineOutlinedIcon  />
                 </IconButton>
                 <Button type="submit" color="secondary" variant="contained">
                   <EditOutlinedIcon />
