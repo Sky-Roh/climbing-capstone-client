@@ -140,14 +140,14 @@ const SidebarList = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Box marginBottom={!isCollapsed ? "5.8rem" : "17rem"}></Box>
+            {/* <Box marginBottom={!isCollapsed ? "5.8rem" : "17rem"}></Box>
             <SidebarItem
               title="Log Out"
               to="/logout"
               icon={<LogoutOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
           </Box>
         </Menu>
       </Sidebar>

@@ -1,0 +1,101 @@
+.signUp {
+    margin: 4.5rem;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: black;
+
+    &__success {
+        color: rgb(85, 85, 224);
+        font-size: 3rem;
+    }
+}
+
+.success {
+    margin: 1rem;
+
+}
+
+.success-icon {
+    display: inline-block;
+    width: 15rem;
+    height: 15rem;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    border: 1.5rem solid lighten(blue, 20%);
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+    transform-origin: center;
+    animation: showSucess 180ms ease-in-out;
+    transform: scale(1);
+
+    &__tip,
+    &__long {
+      display: block;
+      position: absolute;
+      height: 1.5rem;
+      background-color: lighten(blue, 20%);
+      border-radius: 1em;
+    }
+  
+    &__tip {
+      width: 4.2rem;
+      top: 6.45rem;
+      left: 2.1rem;
+      transform: rotate(45deg);
+      animation: leftBar 300ms ease-in-out;
+      animation-fill-mode: forwards;
+      animation-delay: 180ms;
+      visibility: hidden;
+    }
+  
+    &__long {
+      width: 6.6rem;
+      transform: rotate(-45deg);
+      top: 5.7rem;
+      left: 3.825rem;
+      animation: rightBar 140ms ease-in-out;
+      animation-fill-mode: forwards;
+      visibility: hidden;
+      animation-delay: 300ms + 140ms;
+    }
+  }
+  
+  
+  @keyframes showSuccess {
+      from {
+          transform: scale(0);
+      }
+      to {
+          transform: scale(2);
+      }
+  }
+  
+  @keyframes leftBar {
+    from {
+        width: 0;
+        top: 5.25rem;
+        left: 5rem;
+    }
+    to {
+        width: 4,2rem;
+        top: 6.45rem;
+        left: 2.1rem;
+        visibility: visible;
+    }
+}
+
+@keyframes rightBar {
+    from {
+        width: 0;
+        top: 7.65rem;
+        left: 4.8rem;
+    }
+    to {
+        width: 6.8rem;
+        top: 5.7rem;
+        left: 3.825rem;
+        visibility: visible;
+    }
+}

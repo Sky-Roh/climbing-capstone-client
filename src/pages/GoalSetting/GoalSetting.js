@@ -5,14 +5,14 @@ import {
   Box,
   Typography,
   useTheme,
-  CircularProgress,
   IconButton,
-  Modal
+  Modal,
 } from "@mui/material";
 import { tokens } from "../../theme";
 import GoalItem from "../../components/GoalItem/GoalItem";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import AddGoal from "../../components/AddGoal/AddGoal";
+import emptyIcon from "../../assets/icons/emptyIcon.png";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const GoalSetting = () => {
@@ -22,7 +22,7 @@ const GoalSetting = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [goalInfo, setGoalInfo] = useState([]);
-  const [showAdd, setShowAdd] = useState(false)
+  const [showAdd, setShowAdd] = useState(false);
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
@@ -30,7 +30,6 @@ const GoalSetting = () => {
     axios.get(`${SERVER_URL}/goals`).then((res) => {
       const goals = res.data;
       setGoalInfo(goals);
-      console.log(goals);
       const completedGoals = goals.filter(
         (goal) => goal.achievement === "Completed"
       ).length;
@@ -73,12 +72,12 @@ const GoalSetting = () => {
   }, [data]);
 
   const handleAddGoal = () => {
-    setShowAdd(true)
+    setShowAdd(true);
   };
 
   const handleAddClose = () => {
-    setShowAdd(false)
-  }
+    setShowAdd(false);
+  };
 
   return (
     <>
@@ -90,7 +89,6 @@ const GoalSetting = () => {
       >
         <>
           <AddGoal />
-          
         </>
       </Modal>
       <Box
@@ -120,8 +118,15 @@ const GoalSetting = () => {
           >
             Climbing Goals by Progress
           </Typography>
-          {loading ? (
-            <CircularProgress />
+          {loading || goalInfo.length === 0 ? (
+            <img
+              src={emptyIcon}
+              alt="empty"
+              style={{
+                background: colors.primary[100],
+                borderRadius: "0.5rem",
+              }}
+            />
           ) : (
             <canvas
               id="canvas"
@@ -130,6 +135,7 @@ const GoalSetting = () => {
             />
           )}
         </Box>
+
         <Box
           margin="4rem 1.5rem 0 1.5rem"
           backgroundColor={colors.blueAccent[100]}
@@ -138,10 +144,7 @@ const GoalSetting = () => {
           borderRadius="0.5rem"
           overflow="auto"
         >
-          <Box
-            color={colors.primary[400]}
-            sx={{ display: "flex", justifyContent: "center", gap: "0.5rem" }}
-          >
+          <Box color={colors.primary[400]}>
             <Typography
               margin="1rem 0"
               textAlign="center"
@@ -150,27 +153,51 @@ const GoalSetting = () => {
             >
               Goals
             </Typography>
-            <IconButton
-              sx={{ color: colors.primary[400] }}
-              onClick={handleAddGoal}
-            >
-              <AddTaskOutlinedIcon />
-            </IconButton>
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <IconButton
+                onClick={handleAddGoal}
+                sx={{
+                  gap: "0.5rem",
+                  backgroundColor: colors.primary[200],
+                  borderRadius: "0",
+                  "&:hover": {
+                    backgroundColor: colors.greenAccent[300],
+                    cursor: "pointer",
+                  },
+                }}
+              >
+                <AddTaskOutlinedIcon
+                  sx={{
+                    color: colors.blueAccent[500],
+                  }}
+                />
+                <Typography textAlign="center" color={colors.primary[400]}>
+                  Add Your Goal
+                </Typography>
+              </IconButton>
+            </Box>
           </Box>
-
-          {goalInfo.map((goal) => {
-            return (
-              <GoalItem
-                color={colors.primary[400]}
-                key={goal.goal_id}
-                id={goal.goal_id}
-                goal={goal.goal}
-                achievement={goal.achievement}
-                check={goal.check}
-                description={goal.description}
-              />
-            );
-          })}
+          {goalInfo.length === 0 ? (
+            <Typography variant="h3" textAlign="center" margin="2rem">
+              Please Add Your Goal ⚽️
+            </Typography>
+          ) : (
+            goalInfo.map((goal) => {
+              return (
+                <GoalItem
+                  color={colors.primary[400]}
+                  goalInfo={goalInfo}
+                  key={goal.goal_id}
+                  id={goal.goal_id}
+                  goal={goal.goal}
+                  achievement={goal.achievement}
+                  check={goal.check}
+                  description={goal.description}
+                  colors={colors}
+                />
+              );
+            })
+          )}
         </Box>
       </Box>
     </>

@@ -10,6 +10,8 @@ import PackingList from "./pages/PackingList/PackingList";
 import Outdoor from "./pages/Outdoor/Outdoor";
 import Redirect from "./pages/Redirect/Redirect";
 import RedirectSession from "./pages/RedirectSession/RedirectSession"
+import RedirectGoal from "./pages/RedirectGoal/RedirectGoal";
+
 function App() {
   const [theme, colorMode] = useMode();
 
@@ -32,6 +34,7 @@ function App() {
               <Route path="/outdoor" element={<Outdoor />}></Route>
               <Route path="/redirect" element={<Redirect />}></Route>
               <Route path="/redirectSession" element={<RedirectSession />}></Route>
+              <Route path="/redirectGoal" element={<RedirectGoal />}></Route>
 
             </Routes>
           </main>

@@ -67,7 +67,7 @@ const PackingList = () => {
         sortedItems.filter((item) => item.climbingtype_name === typeData[4])
       );
     });
-  }, [editItemId]);
+  }, [editItemId, typeData]);
 
   const handleEditItem = (itemId) => {
     setEditItemId(itemId);
@@ -84,6 +84,9 @@ const PackingList = () => {
   const handleDeleteCancel = () => {
     setDeleteConfirmationOpen(false);
     setDeleteItemId(null);
+  };
+  const handleEditText = (value) => {
+    setEditItemText(value);
   };
 
   const handleDeleteItem = async () => {
@@ -153,16 +156,21 @@ const PackingList = () => {
 
   const handleItemClose = () => {
     setAddItem(false);
-  }
+  };
 
   const handleAdd = () => {
     setAddItem(true);
-  }
+  };
 
   return (
     <Box
       display="flex"
-      sx={{ flexDirection: "column", alignItems: "center", margin: 0, maxHeight: "80vh" }}
+      sx={{
+        flexDirection: "column",
+        alignItems: "center",
+        margin: 0,
+        maxHeight: "80vh",
+      }}
     >
       <Modal
         open={addItem}
@@ -171,7 +179,7 @@ const PackingList = () => {
         aria-describedby="modal-modal-description"
       >
         <>
-          <AddPackingList typeData={typeData}/>
+          <AddPackingList typeData={typeData} />
         </>
       </Modal>
       <Box m="1.5rem 0">
@@ -228,7 +236,10 @@ const PackingList = () => {
               ))}
             </Select>
           </FormControl>
-          <IconButton onClick={handleAdd} sx={{ width: "2.5rem", height: "2.5rem" }} >
+          <IconButton
+            onClick={handleAdd}
+            sx={{ width: "2.5rem", height: "2.5rem" }}
+          >
             <AddCircleOutlineOutlinedIcon />
           </IconButton>
         </Box>
@@ -240,6 +251,7 @@ const PackingList = () => {
               id={item.packing_id}
               packing_item={item.packing_item}
               check={item.check}
+              redColor={colors.redAccent[600]}
               colour={colors.primary[100]}
               editItemId={editItemId}
               editItemText={editItemText}
@@ -247,6 +259,7 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
         {selectedClimbingType === typeData[0] &&
@@ -256,6 +269,7 @@ const PackingList = () => {
               id={item.packing_id}
               packing_item={item.packing_item}
               check={item.check}
+              redColor={colors.redAccent[600]}
               colour={colors.primary[100]}
               editItemId={editItemId}
               editItemText={editItemText}
@@ -263,6 +277,7 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
         {selectedClimbingType === typeData[1] &&
@@ -275,6 +290,7 @@ const PackingList = () => {
               id={item.packing_id}
               packing_item={item.packing_item}
               check={item.check}
+              redColor={colors.redAccent[600]}
               colour={colors.primary[100]}
               editItemId={editItemId}
               editItemText={editItemText}
@@ -282,6 +298,7 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
         {selectedClimbingType === typeData[2] &&
@@ -291,6 +308,7 @@ const PackingList = () => {
               id={item.packing_id}
               packing_item={item.packing_item}
               check={item.check}
+              redColor={colors.redAccent[600]}
               colour={colors.primary[100]}
               editItemId={editItemId}
               editItemText={editItemText}
@@ -298,6 +316,7 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
         {selectedClimbingType === typeData[3] &&
@@ -308,12 +327,14 @@ const PackingList = () => {
               packing_item={item.packing_item}
               check={item.check}
               colour={colors.primary[100]}
+              redColor={colors.redAccent[600]}
               editItemId={editItemId}
               editItemText={editItemText}
               onToggleCheck={handleToggleCheck}
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
         {selectedClimbingType === typeData[4] &&
@@ -323,6 +344,7 @@ const PackingList = () => {
               id={item.packing_id}
               packing_item={item.packing_item}
               check={item.check}
+              redColor={colors.redAccent[600]}
               colour={colors.primary[100]}
               editItemId={editItemId}
               editItemText={editItemText}
@@ -330,20 +352,30 @@ const PackingList = () => {
               onEditItem={handleEditItem}
               onDeleteConfirmation={handleDeleteConfirmation}
               onSaveItem={handleSaveItem}
+              handleEditText={handleEditText}
             />
           ))}
       </List>
 
       <Dialog open={deleteConfirmationOpen} onClose={handleDeleteCancel}>
-        <DialogTitle>Delete Item</DialogTitle>
+        <DialogTitle style={{ color: colors.redAccent[400] }}>
+          {" "}
+          Delete Item
+        </DialogTitle>
         <DialogContent>
           Are you sure you want to delete this item?
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteCancel} color="primary">
+          <Button
+            style={{ color: colors.primary[100] }}
+            onClick={handleDeleteCancel}
+          >
             Cancel
           </Button>
-          <Button onClick={handleDeleteItem} color="primary">
+          <Button
+            style={{ color: colors.redAccent[500] }}
+            onClick={handleDeleteItem}
+          >
             Delete
           </Button>
         </DialogActions>

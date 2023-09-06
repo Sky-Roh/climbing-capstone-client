@@ -44,20 +44,20 @@ const Dashboard = () => {
           </Typography>
         </Box>
         <Box m="0 0 0 2rem" maxHeight="70vh" overflow="auto">
-          <Typography variant="h3" mb="1.5rem">
+          <Typography variant="h4" mb="1.5rem">
             ClimbStation is your ultimate climbing companion, designed for both
             indoor and outdoor enthusiasts. Whether you're scaling artificial
             walls or conquering natural peaks, we've got everything you need to
             enhance your climbing journey.
           </Typography>
-          <Typography variant="h3" mb="1.5rem">
+          <Typography variant="h4" mb="1.5rem">
             At ClimbStation, we're dedicated to elevating your climbing
             experience. Our platform offers a range of features to empower
             climbers of all levels. From tracking your climbing sessions to
             providing essential packing lists and up-to-date weather forecasts
             for outdoor, we're here to support your climbing adventures.
           </Typography>
-          <Typography variant="h3" mb="1.5rem">
+          <Typography variant="h4" mb="1.5rem">
             Join our vibrant community of climbers and adventurers. Whether
             you're a seasoned pro or just starting your climbing journey,
             ClimbStation is your partner in reaching new heights. Unleash your
