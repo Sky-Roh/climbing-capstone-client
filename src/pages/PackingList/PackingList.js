@@ -30,7 +30,9 @@ const PackingList = () => {
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState(null);
   const [addItem, setAddItem] = useState(false);
-  const [selectedClimbingType, setSelectedClimbingType] = useState("");
+  const [selectedClimbingType, setSelectedClimbingType] = useState(
+    "Indoor Sport Climbing"
+  );
   const [indoorBouldering, setIndoorBouldering] = useState([]);
   const [outdoorBouldering, setOutdoorBouldering] = useState([]);
   const [indoorSportClimbing, setIndoorSportClimbing] = useState([]);
@@ -244,7 +246,7 @@ const PackingList = () => {
           </IconButton>
         </Box>
 
-        {selectedClimbingType === "" &&
+        {/* {selectedClimbingType === "" &&
           items.map((item) => (
             <PackingItems
               key={item.packing_id}
@@ -261,7 +263,7 @@ const PackingList = () => {
               onSaveItem={handleSaveItem}
               handleEditText={handleEditText}
             />
-          ))}
+          ))} */}
         {selectedClimbingType === typeData[0] &&
           indoorBouldering.map((item) => (
             <PackingItems
@@ -281,10 +283,8 @@ const PackingList = () => {
             />
           ))}
         {selectedClimbingType === typeData[1] &&
-          (selectedClimbingType === "Outdoor Bouldering"
-            ? indoorBouldering
-            : outdoorBouldering
-          ).map((item) => (
+          selectedClimbingType === "Outdoor Bouldering" &&
+          outdoorBouldering.map((item) => (
             <PackingItems
               key={item.packing_id}
               id={item.packing_id}

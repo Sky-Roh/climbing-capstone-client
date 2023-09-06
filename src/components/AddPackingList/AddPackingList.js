@@ -41,7 +41,7 @@ const AddPackingList = ({ typeData }) => {
   const formik = useFormik({
     initialValues: {
       packing_item: "",
-      important_level: "",
+      important_level: 1,
       check: false,
       climbingtype_name: "Indoor Bouldering",
       user_id: 1,
@@ -60,7 +60,7 @@ const AddPackingList = ({ typeData }) => {
     axios
       .post(SERVER_URL + "/packinglist", {
         packing_item: values.packingItem,
-        important_level: values.importantLevel,
+        important_level: values.important_level,
         check: values.check,
         climbingtype_name: values.climbingtype_name,
         user_id: 1,
@@ -141,13 +141,13 @@ const AddPackingList = ({ typeData }) => {
                 InputProps={{ inputProps: { min: 1, max: 3 } }}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                value={formik.values.importantLevel}
-                name="importantLevel"
+                value={formik.values.important_level}
+                name="important_level"
                 error={
-                  formik.touched.importantLevel && formik.errors.importantLevel
+                  formik.touched.important_level && formik.errors.important_level
                 }
                 helperText={
-                  formik.touched.importantLevel && formik.errors.importantLevel
+                  formik.touched.important_level && formik.errors.important_level
                 }
                 sx={{ mt: "1.5rem" }}
               />

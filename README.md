@@ -2,18 +2,21 @@
 
 
 ClimbStation is a tracker app that allows users to record climbing sessions.
-This is an all-in-one solution designed for climbers, providing them with the tools they need to enhance their climbing experience. From tracking workouts and creating packing lists to offering real-time weather updates for outdoor climbing,
+This is an all-in-one solution designed for climbers, providing them with the tools they need to enhance their climbing experience. From tracking workouts and creating packing lists to offering real-time weather updates for outdoor climbing.
+
+## Demo 
+https://climb-station.netlify.app/
 
 
 ## Key Features
 
-📊 Climbing Tracker 
+- 📊 Climbing Tracker 
     - Tracks Sessions using calendar
-✅ Packing List
+- ✅ Packing List
     - Packing List by Climbing Type (Indoor, Outdoor)
-🌥 Outdoor Weather
+- 🌥 Outdoor Weather
     - Gives weather information in Ontario
-🥅 Goal Setting
+- 🥅 Goal Setting
     - Sets the goal for climbing
 
 ## Tech Stack
