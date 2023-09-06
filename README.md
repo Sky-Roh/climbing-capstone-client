@@ -25,19 +25,19 @@ https://climb-station.netlify.app/
     - [React.js]( https://react.dev/ ) 
 
 * API
-    - [OpenWeatherMap-API] ( https://openweathermap.org/api )
+    - [OpenWeatherMap-API]( https://openweathermap.org/api )
 
 * UI
-    - [MUI] ( https://mui.com/material-ui/ )
-    - [SASS] ( https://sass-lang.com/ )
-    - [FullCalendar] ( https://fullcalendar.io/ )
-    - [react-chartjs-2] ( https://react-chartjs-2.js.org/ )
-    - [Chart.js] ( https://www.chartjs.org/docs/latest/ )
-    - [react-pro-sidebar] ( https://www.npmjs.com/package/react-pro-sidebar )
+    - [MUI]( https://mui.com/material-ui/ )
+    - [SASS]( https://sass-lang.com/ )
+    - [FullCalendar]( https://fullcalendar.io/ )
+    - [react-chartjs-2]( https://react-chartjs-2.js.org/ )
+    - [Chart.js]( https://www.chartjs.org/docs/latest/ )
+    - [react-pro-sidebar]( https://www.npmjs.com/package/react-pro-sidebar )
 
 * Validation
-    - [Yup] ( https://www.npmjs.com/package/yup?activeTab=readme )
-    - [Formik] ( https://formik.org/ )
+    - [Yup]( https://www.npmjs.com/package/yup?activeTab=readme )
+    - [Formik]( https://formik.org/ )
 
 
 ### How to start this app ?
