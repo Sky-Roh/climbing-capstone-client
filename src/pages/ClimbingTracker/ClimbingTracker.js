@@ -36,6 +36,8 @@ const ClimbingTracker = () => {
   const [redirect, setRedirect] = useState(false);
   const naviagte = useNavigate();
 
+  console.log(SERVER_URL)
+
   useEffect(() => {
     axios.get(`${SERVER_URL}/climbingsession`).then((res) => {
       const transformedEvents = res.data.map((event) => ({
@@ -46,7 +48,6 @@ const ClimbingTracker = () => {
         description: event.description,
         color: getColorByTitle(event.type_name.toString()), 
       }));
-      
       setCurrentEvents(transformedEvents);
     });
   }, []);
