@@ -220,6 +220,7 @@ const PackingList = () => {
               display: "flex",
               justifyContent: "center",
               minWidth: "90%",
+              margin: "1.5rem auto",
             }}
           >
             <InputLabel id="climbingtype">Type of Climbing</InputLabel>
@@ -227,6 +228,7 @@ const PackingList = () => {
               label="climbingtype"
               name="climbingtype"
               value={selectedClimbingType}
+              style={{ fontSize: "1.2rem" }}
               onChange={(event) => {
                 setSelectedClimbingType(event.target.value);
               }}
@@ -240,9 +242,10 @@ const PackingList = () => {
           </FormControl>
           <IconButton
             onClick={handleAdd}
-            sx={{ width: "2.5rem", height: "2.5rem" }}
           >
-            <AddCircleOutlineOutlinedIcon />
+            <AddCircleOutlineOutlinedIcon
+              style={{ width: "2.5rem", height: "2.5rem" }}
+            />
           </IconButton>
         </Box>
 

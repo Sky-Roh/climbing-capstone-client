@@ -46,12 +46,13 @@ const PackingItem = ({
           onChange={(e) => handleEditText(e.target.value)}
           onBlur={() => onSaveItem(id)}
           autoFocus
+          inputProps={{style: {fontSize: "1.2rem"}}} 
         />
       ) : (
         <ListItemText
           primary={packing_item}
           primaryTypographyProps={{
-            style: { cursor: "pointer" },
+            style: { cursor: "pointer", fontSize: "1.2rem" },
             onClick: () => onEditItem(id),
           }}
         />

@@ -88,7 +88,7 @@ const MonthlyChart = () => {
   return (
     <Box >
       <Bar
-      style={{ maxHeight: "20rem"}}
+      style={{ maxHeight: "50rem"}}
         data={chartData}
         options={{
           scales: {
