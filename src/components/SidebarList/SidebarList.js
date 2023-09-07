@@ -113,7 +113,7 @@ const SidebarList = () => {
             />
 
             <SidebarItem
-              title="Tracking"
+              title="Tracker"
               to="/climbingtracker"
               icon={<BarChartOutlinedIcon />}
               selected={selected}
