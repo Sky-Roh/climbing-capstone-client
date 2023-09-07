@@ -134,7 +134,7 @@ const SidebarList = () => {
               setSelected={setSelected}
             />
             <SidebarItem
-              title="Goal Setting"
+              title="Goals"
               to="/goalsetting"
               icon={<OutlinedFlagIcon />}
               selected={selected}
