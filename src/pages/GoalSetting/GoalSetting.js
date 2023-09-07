@@ -131,7 +131,7 @@ const GoalSetting = () => {
             <canvas
               id="canvas"
               ref={chartRef}
-              style={{ maxWidth: "43rem", maxHeight: "43rem" }}
+              style={{ maxWidth: "30rem", maxHeight: "30rem" }}
             />
           )}
         </Box>
