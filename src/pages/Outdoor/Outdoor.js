@@ -161,7 +161,8 @@ const Outdoor = () => {
             value={city}
             onChange={(e) => setCity(e.target.value)}
             fullWidth
-            style={{ fontSize: "1.6rem", textAlign: "center" }}
+            style={{ fontSize: "1.8rem", textAlign: "center", margin: "1rem 0"
+          }}
           >
             <MenuItem value="Milton">Rattlesnake Point</MenuItem>
             <MenuItem value="The Blue Mountains">Metcalfe Rock</MenuItem>
@@ -187,7 +188,6 @@ const Outdoor = () => {
                 justifyContent: "space-between",
                 width: "100%",
                 padding: "0 10rem",
-                height: `${screenHeight > "700px" ? "none" : "100%"}`
               }}
               display={{  xs: "none", sm: "none", lg: "flex" }}
 
