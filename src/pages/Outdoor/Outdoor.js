@@ -118,6 +118,8 @@ const Outdoor = () => {
   const [city, setCity] = useState("Milton");
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const screenHeight = window.innerHeight;
+
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -180,13 +182,15 @@ const Outdoor = () => {
               {Math.round(weatherData.main.temp - 273.15)}°C
             </Typography>
             <Box
-              display="flex"
               sx={{
                 mt: "2.5rem",
                 justifyContent: "space-between",
                 width: "100%",
                 padding: "0 10rem",
+                height: `${screenHeight > "700px" ? "none" : "100%"}`
               }}
+              display={{  xs: "none", sm: "none", lg: "flex" }}
+
             >
               <Box
                 display="flex"
@@ -206,12 +210,12 @@ const Outdoor = () => {
                 </Typography>
               </Box>
               <Box
-                display="flex"
                 sx={{
                   flexDirection: "column",
                   width: "50%",
                   alignItems: "center",
                 }}
+                display={{  xs: "none", sm: "none", lg: "flex" }}
               >
                 <img
                   src={windIcon}

@@ -20,6 +20,7 @@ const SidebarList = () => {
   return (
     <Box
       display="flex"
+      height="100vh"
       sx={{
         ".ps-sidebar-container": {
           backgroundColor: `${colors.primary[400]} !important`,
@@ -45,7 +46,7 @@ const SidebarList = () => {
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
-              margin: "10px 0 20px 0",
+              margin: "0.6rem 0 1.4rem 0",
               color: colors.grey[100],
             }}
           >
@@ -68,7 +69,7 @@ const SidebarList = () => {
 
           {!isCollapsed && (
             <Box
-              mb="25px"
+              mb="1.8rem"
               display="flex"
               flexDirection="column"
               justifyContent="center"
@@ -88,7 +89,7 @@ const SidebarList = () => {
                   variant="h2"
                   color={colors.grey[100]}
                   fontWeight="bold"
-                  sx={{ m: "10px 0 0 0" }}
+                  sx={{ m: "0.6rem 0 0 0" }}
                 >
                   Sky Roh
                 </Typography>

@@ -9,7 +9,7 @@ const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <>
+    <Box maxHeight="80vh">
       <Box
         display="flex"
         flexDirection="column"
@@ -46,7 +46,7 @@ const Dashboard = () => {
             providing them with the tools they need to enhance their climbing
             experience.
           </Typography>
-          <Typography variant="h3">
+          <Typography variant="h3"  display={{ xs: "none", sm: "none", lg: "block" }}>
             From tracking workouts and creating packing lists to offering
             real-time weather updates for outdoor climbing, this app is a
             must-have companion for both indoor and outdoor climbers.
@@ -57,6 +57,7 @@ const Dashboard = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+
           }}
         >
           <Link
@@ -76,7 +77,7 @@ const Dashboard = () => {
           </Link>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 

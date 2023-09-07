@@ -86,7 +86,7 @@ const MonthlyChart = () => {
   };
 
   return (
-    <Box>
+    <Box >
       <Bar
         data={chartData}
         options={{
