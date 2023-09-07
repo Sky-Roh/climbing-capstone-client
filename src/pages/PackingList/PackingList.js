@@ -211,8 +211,8 @@ const PackingList = () => {
       >
         <Box
           display="flex"
-          width="100%"
-          sx={{ justifyContent: "flex-end", alignContent: "center" }}
+          width="90%"
+          sx={{ justifyContent: "center", alignContent: "center", margin: "0 auto" }}
         >
           <FormControl
             sx={{
@@ -242,6 +242,9 @@ const PackingList = () => {
           </FormControl>
           <IconButton
             onClick={handleAdd}
+
+            style={{ width: "2.5rem", height: "2.5rem" , margin: "2rem 0 2rem 0.5rem"}}
+
           >
             <AddCircleOutlineOutlinedIcon
               style={{ width: "2.5rem", height: "2.5rem" }}
